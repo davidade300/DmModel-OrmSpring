@@ -21,11 +21,21 @@ public class Atividade {
 
     private Double preco;
 
+    //um mesmo participante nao pode estar presente em uma mesma atividade
+    //duas vezes (levando em consideracao que o evento dura 1 dia)
+    // tabela auxiliar para diminuir a poluicao da tabela tb_atividade
     @ManyToMany
     @JoinTable(name = "tb_participante_atividade",
             joinColumns =  @JoinColumn(name = "atividade_id"),
             inverseJoinColumns = @JoinColumn(name = "participante_id"))
     private Set<Participante> participantes = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
+    private Categoria categoria;
+
+    @OneToMany(mappedBy = "atividade" )
+    private Set<Bloco> blocos = new HashSet<>();
 
     public Atividade() {
     }
@@ -71,6 +81,18 @@ public class Atividade {
 
     public Set<Participante> getParticipantes() {
         return participantes;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public Set<Bloco> getBlocos() {
+        return blocos;
     }
 
     @Override
