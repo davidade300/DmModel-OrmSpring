@@ -2,7 +2,9 @@ package com.springchallenge.domainmodelandorm.entities;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_atividade")
@@ -19,7 +21,14 @@ public class Atividade {
 
     private Double preco;
 
-    public Atividade(){}
+    @ManyToMany
+    @JoinTable(name = "tb_participante_atividade",
+            joinColumns =  @JoinColumn(name = "atividade_id"),
+            inverseJoinColumns = @JoinColumn(name = "participante_id"))
+    private Set<Participante> participantes = new HashSet<>();
+
+    public Atividade() {
+    }
 
     public Atividade(Long id, String nome, String descricao, Double preco) {
         this.id = id;
@@ -58,6 +67,10 @@ public class Atividade {
 
     public void setPreco(Double preco) {
         this.preco = preco;
+    }
+
+    public Set<Participante> getParticipantes() {
+        return participantes;
     }
 
     @Override

@@ -2,9 +2,7 @@ package com.springchallenge.domainmodelandorm.entities;
 
 import jakarta.persistence.*;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "tb_participante")
@@ -19,8 +17,9 @@ public class Participante {
     @Column(unique=true)
     private String email;
 
-    @OneToMany(mappedBy = "")
-    Set<Atividade> atividades = new HashSet<>();
+    // um participante não consegue participar da mesma atividade varias vezes
+    @ManyToMany(mappedBy = "participantes")
+    private List<Atividade> atividades = new ArrayList<>();
 
     public Participante(){}
 
@@ -52,6 +51,10 @@ public class Participante {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Atividade> getAtividades() {
+        return atividades;
     }
 
     @Override
