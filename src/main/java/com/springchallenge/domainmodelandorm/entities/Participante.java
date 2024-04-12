@@ -21,7 +21,7 @@ public class Participante {
 
     // um participante não consegue participar da mesma atividade varias vezes
     // levando em consideracao que o evento só possui 1 dia
-    @ManyToMany(mappedBy = "participantes")
+    @ManyToMany (mappedBy = "participantes")
     private Set<Atividade> atividades = new HashSet<>();
 
     public Participante(){}
